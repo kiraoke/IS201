@@ -1,0 +1,238 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+li {
+        font-size: 15px;
+        font-weight: normal;
+        color: #272727;
+        line-height: 1.6
+}
+
+/* --- DESKTOP SIDEBAR STYLES (Default for screens > 768px) --- */
+#main-nav {
+    position: fixed; /* Keeps the sidebar in place */
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #9d2222; /* Deep Red */
+    color: white;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0; /* Ensure no padding interferes with centering */
+
+    /* Flexbox for vertical centering */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically centers the <ul> */
+}
+
+/* Hide mobile header elements on desktop */
+#mobile-header {
+    display: none;
+}
+
+#main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Remove default margin for perfect centering */
+    width: 100%;
+}
+
+#main-nav a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background-color 0.6s;
+}
+
+#main-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Content Area */
+#main-content {
+    margin-left: 260px; /* Pushes content past the fixed sidebar */
+    margin-right: 5px;
+    padding: 5px;
+    background-color: white;
+}
+
+a {
+    color: maroon;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 12px;
+}
+a:hover {
+    text-decoration: underline;
+    font-size: 13px;
+}
+a:visited {color: rgb(101, 5, 157)}
+
+    .ResumeListHeading {
+        font-weight: bold;
+        font-style: normal;
+    }
+    .underline{text-decoration: underline;}
+    .justify{text-align: justify;}
+    .bold{font-weight: bold}
+    .emphasize{font-weight: bold; font-style: italic;}
+
+h1, h2, .content-block:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Custom Content Styling */
+.section-title {
+    font-family: 'Georgia', serif; /* --- [FONT] Change Section Headlines here --- */
+    color: #A03030;               /* --- [COLOR] Matches your sidebar red --- */
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.body-text, .placeholder-text {
+    font-family: 'Arial', sans-serif; /* --- [FONT] Change body text here --- */
+    color: #333333;                   /* --- [COLOR] Dark grey text for readability --- */
+    line-height: 1.6;
+}
+
+/* Divs for positioning blocks */
+.content-block {
+    margin-left: 250px; /* Pushes content past the fixed sidebar */
+    padding: 20px;
+    background-color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.project-img {
+    max-width: 250px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive YouTube Embed */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Tableau Container */
+.tableau-container {
+    width: 97%;
+    margin: 30px 0;
+    border: 1px solid #eee;
+}
+
+
+/* --- MOBILE STYLES (Screen Width <= 768px) --- */
+@media (max-width: 768px) {
+    
+    /* Main Content Reset */
+    #main-content {
+        margin: 5px;
+        padding-top: 25px; /* Add space for the new fixed mobile header */
+    }
+
+    /* Mobile Header/Title Bar - Always visible at the top */
+    #mobile-header {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #9d2222;
+        color: white;
+        z-index: 100; /* Ensure it stays above everything */
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+
+    #mobile-title {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    /* Hamburger Menu Button */
+    #menu-toggle {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    /* Navigation Menu (The actual dropdown part) */
+    #main-nav {
+        /* Reset desktop fixed/flex styles for mobile */
+        position: absolute;
+        width: 100%;
+        height: auto;
+        top: 50px; /* Position right below the fixed header */
+        left: 0;
+        z-index: 99;
+        background-color: #9d2222; /* Ensure background stays red */
+    
+          /* SLIDE EFFECT START */
+         overflow: hidden; /* Hide content that goes beyond the max-height */
+         max-height: 0;    /* Start height at 0 (hidden) */
+         transition: max-height 0.6s ease-out; /* Add smooth sliding transition */
+    }
+    
+    /* Class to show the menu (will be toggled by JavaScript) */
+    .menu-open {
+        max-height: 500px !important;
+    }
+
+    /* List styling for dropdown */
+    #main-nav ul {
+        display: block;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Links in the dropdown */
+    #main-nav a {
+        font-size: 1em; /* Mobile size adjustment */
+        text-align: left;
+        padding: 10px 20px;
+    }
+}
+
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.5em;
+    }
+}

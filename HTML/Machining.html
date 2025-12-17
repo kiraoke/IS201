@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Machinist Experience</title>
+    <link rel="stylesheet" href="../Styles/ScratchPageStyle.css">
+    
+    <div id="main-content">
+    
+     <div id="mobile-header">
+        <span id="mobile-title">My Machinist Experience</span>
+        <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">
+            ☰ </button>
+      </div>
+
+        <nav id="main-nav">
+            <ul>
+                 <li><a href="../index.html">HOME</a></li>
+                 <li><a href="#top">MANUFACTURING</a></li>
+                 <li><a href="#past">PAST PROJECTS</a></li>
+                 <li><a href="#DIY">DIY</a></li>
+                 <li><a href="#future">FUTURE GOAL</a></li>
+                 <li><a href="AGame.html">MINI GAME</a></li>
+            </ul>
+        </nav>
+    
+    </div>
+
+    <script>
+         const menuToggle = document.getElementById('menu-toggle');
+         const mainNav = document.getElementById('main-nav');
+
+         menuToggle.addEventListener('click', function() {
+          // Toggle the visibility of the navigation menu
+          mainNav.classList.toggle('menu-open');
+        
+         // Toggle the ARIA attribute for accessibility
+          const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+          menuToggle.setAttribute('aria-expanded', !isExpanded);
+    });
+    </script>
+
+</head>
+<body id="top">
+
+    
+
+        <div id="manufacturing-section"></div>
+
+        <div id="main-content">
+            <h2 class="section-title" id="past">Previous Projects</h2>
+            <p class="placeholder-text">I have been involved in machine manufacturing for about 6 years. In that time I have been involved in many projects. Here are a few of them:</p>
+            
+            <ol class="main-list">
+                <li>Cork Coasters with a Wood Coaster Holder
+                    <ul class="sub-list">
+                        <li>6 differently designed coasters</li>
+                        <li>Includes 2 metal dowels on the sides of the coaster holder made by CNC lathe</li>
+                        <li>Coasters made with laser cutter</li>
+                        <li>Holder made with recycled table legs glued together and shaped</li>
+                    </ul>
+                </li>
+                <li>Machinist Cube
+                    <ul class="sub-list">
+                        <li>All Mill work</li>
+                        <li>Rotary Table</li>
+                    </ul>
+                </li>
+                <li>Compass
+                    <ul class="sub-list">
+                        <li>Fusion 360</li>
+                        <li>3D Printing</li>
+                        <li>Threads Modeled on Bottom to Attach to Camera Tripod</li>
+                        <div class="image-container">
+                            <img src="../Images/All 3 together.png" alt="A Protractor Attached to a Custom Base" class="project-img">
+                        </div>
+                    </ul>
+                </li>
+                <li>Bolt-Action Pen
+                    <ul class="sub-list">
+                        <li>See More Info Below</li>
+                    </ul>
+                </li>
+                <li>LEGO 3D Model Building
+                    <ul class="sub-list">
+                        <li>Onshape</li>
+                        <div class="image-container">
+                            <img src="../Images/LEGOTemple.png" alt="3D LEGO Model of the LDS Yorba Linda Temple" class="project-img">
+                        </div>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div id="main-content">
+            <h2 class="section-title" id="DIY">Try One Yourself</h2>
+            <p class="body-text">One project I recommend is making a Bolt-Action Pen.</p>
+            
+            <div class="image-container">
+                <img src="../Images/Bolt-Action Pen.jpg" alt="Finished Bolt Action Pen" class="project-img">
+            </div>
+            
+            <p class="body-text">I made one made of aluminum and brass. The design and walkthrough are all done by Inheritance Machining. Here is his video:</p>
+            
+            <div class="video-container">
+                <iframe 
+                     width="560"
+                     height="315" 
+                     src="https://www.youtube.com/embed/j27RKTHMLkA?si=d_ZObR0QwXGEU9a9"
+                     title="YouTube video player"
+                     frameborder="0" 
+                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                     referrerpolicy="strict-origin-when-cross-origin" 
+                     allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div id="main-content">
+            <h2 class="section-title" id="future">Where I Want to go With Manufacturing</h2>
+            <p class="body-text">
+                At its simplest, sustainable manufacturing is the process of creating products using methods that minimize negative impacts on the environment while conserving energy and natural resources. 
+                Think of it as a shift from the old "take-make-waste" model to a more responsible way of building things. 
+                Instead of just focusing on how fast or cheap a product can be made, companies look at the entire lifecycle of an item—from where the raw materials come from to what happens to the product when you're done with it.
+                <br><br>
+                In recent years, more companies have become invested in sustainable manufacturing.
+                Companies are moving toward sustainable manufacturing not just because it's good for the planet, but because it has become a strategic business necessity. 
+                In 2025, over 91% of manufacturing leaders have sustainability initiatives in place, driven by a combination of financial gains, market demand, and new technologies.
+            </p>
+            
+            <div class="tableau-container">
+
+                <div class='tableauPlaceholder' id='viz1765954363526' style='position: relative'>
+                    <noscript>
+                        <a href='#'>
+                            <img alt='Sustainable Manufacturing Market Size ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Su&#47;SustainableManufacturing_17659541897580&#47;Sheet12&#47;1_rss.png' style='border: none' />
+                        </a>
+                    </noscript>
+                    <object class='tableauViz'  style='display:none;'>
+                        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                        <param name='embed_code_version' value='3' /> 
+                        <param name='site_root' value='' />
+                        <param name='name' value='SustainableManufacturing_17659541897580&#47;Sheet12' />
+                        <param name='tabs' value='no' /><param name='toolbar' value='yes' />
+                        <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Su&#47;SustainableManufacturing_17659541897580&#47;Sheet12&#47;1.png' /> 
+                        <param name='animate_transition' value='yes' />
+                        <param name='display_static_image' value='yes' />
+                        <param name='display_spinner' value='yes' />
+                        <param name='display_overlay' value='yes' />
+                        <param name='display_count' value='yes' />
+                        <param name='language' value='en-US' />
+                        <param name='filter' value='publish=yes' />
+                        <param name='filter' value='showOnboarding=true' />
+                    </object>
+                </div> 
+
+                <script type='text/javascript'>   
+
+                    var divElement = document.getElementById('viz1765954363526');
+                    var vizElement = divElement.getElementsByTagName('object')[0];
+                    vizElement.style.width='100%';
+                    vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
+                    var scriptElement = document.createElement('script');
+                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+
+                </script>
+
+            </div>
+
+            <p class="body-text">
+                 I am driven to enter sustainable manufacturing because I believe we are at a critical crossroads regarding how we manage our world's resources. 
+                 It seems like the traditional 'take-make-waste' model is no longer a viable path for long-term stability, and I am committed to being part of the solution.
+                 <br><br>
+                 My focus is on resource stewardship. 
+                 By championing waste reduction and integrating circular economy principles, we can ensure that the materials we use today are preserved for the generations of tomorrow. 
+                 For me, this isn't just about operational efficiency. 
+                 It's about the responsibility we have to our communities and the environment. 
+                 I want to help organizations transition to models that don't just 'do less harm' but actively contribute to a healthier planet and a more resilient society.
+            </p>
+
+            <br><br>
+
+            <a href="#top">Back to Top</a>
+        
+        </div>
+
+
+</body>
+</html>

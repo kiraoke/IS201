@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kira Gibson - Space Game</title>
+    
+    <style>
+        /* =========================================
+           1. PAGE LAYOUT & SIDEBAR STYLES
+           ========================================= */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9; /* --- [COLOR] Page Background --- */
+        }
+
+        /* Sidebar Styling */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #9d2222; /* --- [COLOR] Sidebar Background --- */
+            color: white;
+            padding: 20px 0;
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        nav { width: 100%; }
+        nav ul { list-style: none; padding: 0; margin: 0; }
+
+        nav a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: white; /* --- [COLOR] Link Text --- */
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content Area */
+        #main-content {
+            margin-left: 250px;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #9d2222; /* --- [COLOR] Headline Text --- */
+            margin-bottom: 10px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        p { color: #666; margin-bottom: 30px; }
+
+        /* =========================================
+           2. GAME SPECIFIC STYLES
+           ========================================= */
+        
+        /* The container for the game canvas */
+        #game-container {
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        canvas {
+            display: block;
+            background-color: #111; /* --- [COLOR] Game Background (Dark Space) --- */
+            /* You can make this 'transparent' if you want an image behind it */
+        }
+
+        /* Score Display */
+        #score-board {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #0ff; /* Neon Glow */
+        }
+
+        /* Game Over Overlay */
+        #game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            display: none; /* Hidden by default */
+        }
+
+        #game-overlay h2 {
+            font-size: 40px;
+            margin: 0 0 20px 0;
+            color: #ff3366; /* --- [COLOR] Game Over Text --- */
+            text-shadow: 0 0 10px #ff3366;
+        }
+
+        button.start-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #00ccff; /* --- [COLOR] Button Color --- */
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: transform 0.1s, box-shadow 0.3s;
+            box-shadow: 0 0 15px #00ccff;
+        }
+
+        button.start-btn:hover {
+            transform: scale(1.05);
+            background-color: #fff;
+        }
+
+        /* =========================================
+           3. MOBILE CONTROLS (Touch Buttons)
+           ========================================= */
+        #mobile-controls {
+            display: none; /* Hidden on desktop */
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .control-btn {
+            background-color: rgba(157, 34, 34, 0.8); /* --- [COLOR] Mobile Button Color --- */
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 20px;
+            border-radius: 10px;
+            user-select: none; /* Prevents highlighting text while tapping */
+            touch-action: manipulation; /* Improves touch response */
+        }
+
+        .control-btn:active {
+            background-color: #ff5555;
+        }
+
+        #fire-btn {
+            background-color: rgba(0, 204, 255, 0.8); /* Blue for fire */
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+
+        /* =========================================
+           4. RESPONSIVE MEDIA QUERIES
+           ========================================= */
+        @media (max-width: 768px) {
+            #sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px;
+                font-weight: bold;
+            }
+
+            nav ul { display: flex; width: 100%; justify-content: space-around; }
+            nav a { padding: 10px; font-size: 1em; }
+
+            #main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            /* Show mobile controls on small screens */
+            #mobile-controls {
+                display: flex;
+            }
+
+            /* Adjust canvas size for mobile */
+            canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <nav>
+            <ul>
+                <li><a href="../index.html">HOME</a></li>
+                <li><a href="Machining.html">MANUFACTURING</a></li>
+                <li><a href="#!">MINI GAME</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="main-content">
+        <h1>Galaxy Defender</h1>
+        <p>Use Left/Right Arrows to Move, Spacebar to Shoot.</p>
+
+        <div id="game-container">
+            <div id="score-board">Score: 0</div>
+            
+            <canvas id="gameCanvas" width="600" height="400"></canvas>
+            
+            <div id="game-overlay">
+                <h2 id="overlay-title">GAME OVER</h2>
+                <button class="start-btn" onclick="resetGame()">Play Again</button>
+            </div>
+        </div>
+
+        <div id="mobile-controls">
+            <button class="control-btn" id="left-btn">◀ Left</button>
+            <button class="control-btn" id="fire-btn">🔥 FIRE</button>
+            <button class="control-btn" id="right-btn">Right ▶</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score-board');
+        const overlay = document.getElementById('game-overlay');
+        const overlayTitle = document.getElementById('overlay-title');
+
+        // Game State Variables
+        let gameRunning = true;
+        let score = 0;
+        let frameCount = 0;
+
+        // --- [COLOR] Game Colors ---
+        const colors = {
+            player: '#00ccff',    // Cyan Ship
+            bullet: '#ffff00',    // Yellow Laser
+            enemy1: '#ff3366',    // Pink Enemy
+            enemy2: '#33ff33',    // Green Enemy
+            star: '#ffffff'       // White Stars
+        };
+
+        // Inputs
+        const keys = { ArrowLeft: false, ArrowRight: false, Space: false };
+
+        // 1. PLAYER OBJECT
+        const player = {
+            x: canvas.width / 2 - 20,
+            y: canvas.height - 40,
+            width: 40,
+            height: 20,
+            speed: 5,
+            color: colors.player
+        };
+
+        // 2. BULLETS ARRAY
+        let bullets = [];
+
+        // 3. ENEMIES ARRAY
+        let enemies = [];
+        const enemyRows = 4;
+        const enemyCols = 8;
+        const enemyWidth = 30;
+        const enemyHeight = 20;
+        const enemyPadding = 15;
+        const enemyOffsetTop = 30;
+        const enemyOffsetLeft = 30;
+        let enemySpeed = 1; 
+        let enemyDirection = 1; // 1 = right, -1 = left
+
+        // 4. STARS (Background decoration)
+        let stars = [];
+        for(let i=0; i<50; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2
+            });
+        }
+
+        // Initialize Enemies
+        function initEnemies() {
+            enemies = [];
+            for (let c = 0; c < enemyCols; c++) {
+                for (let r = 0; r < enemyRows; r++) {
+                    let enemyX = (c * (enemyWidth + enemyPadding)) + enemyOffsetLeft;
+                    let enemyY = (r * (enemyHeight + enemyPadding)) + enemyOffsetTop;
+                    enemies.push({ 
+                        x: enemyX, 
+                        y: enemyY, 
+                        alive: true,
+                        color: r % 2 === 0 ? colors.enemy1 : colors.enemy2 
+                    });
+                }
+            }
+        }
+
+        // --- INPUT HANDLING ---
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowLeft') keys.ArrowLeft = true;
+            if (e.code === 'ArrowRight') keys.ArrowRight = true;
+            if (e.code === 'Space') {
+                if(!keys.Space && gameRunning) shootBullet(); 
+                keys.Space = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'ArrowLeft') keys.ArrowLeft = false;
+            if (e.code === 'ArrowRight') keys.ArrowRight = false;
+            if (e.code === 'Space') keys.Space = false;
+        });
+
+        // Mobile Touch Events
+        const leftBtn = document.getElementById('left-btn');
+        const rightBtn = document.getElementById('right-btn');
+        const fireBtn = document.getElementById('fire-btn');
+
+        // Helper to handle touch/mouse hold
+        const addTouch = (elem, key) => {
+            elem.addEventListener('mousedown', () => keys[key] = true);
+            elem.addEventListener('mouseup', () => keys[key] = false);
+            elem.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; });
+            elem.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = false; });
+        };
+
+        addTouch(leftBtn, 'ArrowLeft');
+        addTouch(rightBtn, 'ArrowRight');
+        
+        // Fire button triggers shoot immediately
+        fireBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if(gameRunning) shootBullet();
+        });
+        fireBtn.addEventListener('mousedown', (e) => {
+            if(gameRunning) shootBullet();
+        });
+
+
+        // --- GAME LOGIC FUNCTIONS ---
+
+        function shootBullet() {
+            bullets.push({
+                x: player.x + player.width / 2 - 2,
+                y: player.y,
+                width: 4,
+                height: 10,
+                speed: 7
+            });
+        }
+
+        function update() {
+            if (!gameRunning) return;
+
+            // Move Player
+            if (keys.ArrowLeft && player.x > 0) player.x -= player.speed;
+            if (keys.ArrowRight && player.x + player.width < canvas.width) player.x += player.speed;
+
+            // Move Bullets
+            for (let i = 0; i < bullets.length; i++) {
+                bullets[i].y -= bullets[i].speed;
+                // Remove off-screen bullets
+                if (bullets[i].y < 0) {
+                    bullets.splice(i, 1);
+                    i--;
+                }
+            }
+
+            // Move Enemies
+            let hitEdge = false;
+            // Check if any enemy hits the edge
+            for (let i = 0; i < enemies.length; i++) {
+                if (enemies[i].alive) {
+                    if (enemies[i].x + enemyWidth > canvas.width || enemies[i].x < 0) {
+                        hitEdge = true;
+                    }
+                }
+            }
+
+            if (hitEdge) {
+                enemyDirection *= -1; // Reverse direction
+                // Move all enemies down
+                for (let i = 0; i < enemies.length; i++) {
+                    enemies[i].y += 10;
+                    // Game Over if enemies reach player level
+                    if (enemies[i].alive && enemies[i].y + enemyHeight >= player.y) {
+                        gameOver(false);
+                    }
+                }
+            }
+
+            // Update Enemy X positions
+            for (let i = 0; i < enemies.length; i++) {
+                if (enemies[i].alive) {
+                    enemies[i].x += enemySpeed * enemyDirection;
+                }
+            }
+
+            // Collision Detection (Bullet hits Enemy)
+            for (let i = 0; i < bullets.length; i++) {
+                for (let j = 0; j < enemies.length; j++) {
+                    let b = bullets[i];
+                    let e = enemies[j];
+                    
+                    if (e.alive && 
+                        b.x < e.x + enemyWidth &&
+                        b.x + b.width > e.x &&
+                        b.y < e.y + enemyHeight &&
+                        b.height + b.y > e.y) {
+                            
+                        // Hit!
+                        e.alive = false;
+                        bullets.splice(i, 1);
+                        i--;
+                        score += 10;
+                        scoreElement.innerText = "Score: " + score;
+                        
+                        // Increase speed slightly every 5 kills for excitement
+                        if(score % 50 === 0) enemySpeed += 0.5;
+
+                        // Check Win
+                        if (enemies.every(e => !e.alive)) {
+                            gameOver(true);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        function draw() {
+            // Clear Canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Stars (Background)
+            ctx.fillStyle = colors.star;
+            stars.forEach(star => {
+                ctx.fillRect(star.x, star.y, star.size, star.size);
+            });
+
+            // Draw Player
+            ctx.fillStyle = player.color;
+            // Drawing a simple triangle/ship shape
+            ctx.beginPath();
+            ctx.moveTo(player.x + player.width/2, player.y);
+            ctx.lineTo(player.x + player.width, player.y + player.height);
+            ctx.lineTo(player.x, player.y + player.height);
+            ctx.fill();
+
+            // Draw Bullets
+            ctx.fillStyle = colors.bullet;
+            bullets.forEach(b => {
+                ctx.fillRect(b.x, b.y, b.width, b.height);
+            });
+
+            // Draw Enemies
+            enemies.forEach(e => {
+                if (e.alive) {
+                    ctx.fillStyle = e.color;
+                    // Draw alien block
+                    ctx.fillRect(e.x, e.y, enemyWidth, enemyHeight);
+                    // Draw little eyes (for creativity/detail)
+                    ctx.fillStyle = 'black';
+                    ctx.fillRect(e.x + 5, e.y + 5, 5, 5);
+                    ctx.fillRect(e.x + 20, e.y + 5, 5, 5);
+                }
+            });
+        }
+
+        function gameLoop() {
+            if (gameRunning) {
+                update();
+                draw();
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function gameOver(win) {
+            gameRunning = false;
+            overlay.style.display = "flex";
+            overlayTitle.innerText = win ? "YOU WIN!" : "GAME OVER";
+            overlayTitle.style.color = win ? "#33ff33" : "#ff3366";
+        }
+
+        function resetGame() {
+            gameRunning = true;
+            score = 0;
+            enemySpeed = 1; // Reset speed
+            scoreElement.innerText = "Score: 0";
+            overlay.style.display = "none";
+            bullets = [];
+            player.x = canvas.width / 2 - 20;
+            initEnemies();
+            gameLoop();
+        }
+
+        // Start the game initially
+        initEnemies();
+        gameLoop();
+
+    </script>
+</body>
+</html>
